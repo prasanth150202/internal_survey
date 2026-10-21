@@ -16,11 +16,40 @@ const QUESTIONS = [
   {q:"Think about a week when your work felt less satisfying than usual. What is most likely to have contributed?", a:["Too many interruptions or unclear priorities.","Too much repetitive work with little room to improve it.","Not enough context, support, or confidence to move forward.","The tasks did not connect clearly to outcomes I care about."]}
 ];
 
+// The ID from your sheet's URL: https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit
+const SHEET_ID = 'PASTE_YOUR_SHEET_ID_HERE';
+
+function getSpreadsheet_() {
+  if (!SHEET_ID || SHEET_ID === 'PASTE_YOUR_SHEET_ID_HERE') throw new Error('Set SHEET_ID at the top of Code.gs.');
+  return SpreadsheetApp.openById(SHEET_ID);
+}
+
+// JSON API used by the frontend (index.html / admin.html).
+// GET  ?action=questions
+// POST {action:'submit', payload:{...}} | {action:'admin', pin:'...'}
 function doGet(e) {
-  const page = e && e.parameter && e.parameter.page === 'admin' ? 'Admin' : 'Index';
-  return HtmlService.createTemplateFromFile(page).evaluate()
-    .setTitle(page === 'Admin' ? 'Team Assessment Admin' : 'Team Work-Style Questionnaire')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  return respond_(() => {
+    const action = e && e.parameter && e.parameter.action;
+    if (action === 'questions') return {questions: getQuestions()};
+    throw new Error('Unknown action.');
+  });
+}
+
+function doPost(e) {
+  return respond_(() => {
+    let body;
+    try { body = JSON.parse(e.postData.contents); } catch (err) { throw new Error('Invalid request body.'); }
+    if (body.action === 'submit') return submitResponse(body.payload);
+    if (body.action === 'admin') return getAdminData(body.pin);
+    throw new Error('Unknown action.');
+  });
+}
+
+function respond_(fn) {
+  let out;
+  try { out = Object.assign({ok:true}, fn()); }
+  catch (err) { out = {ok:false, error: err.message || String(err)}; }
+  return ContentService.createTextOutput(JSON.stringify(out)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function getQuestions() {
@@ -28,8 +57,7 @@ function getQuestions() {
 }
 
 function setupSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  if (!ss) throw new Error('Open Apps Script from the Google Sheet you want to use.');
+  const ss = getSpreadsheet_();
   let sheet = ss.getSheetByName('Responses');
   if (!sheet) sheet = ss.insertSheet('Responses');
   if (sheet.getLastRow() === 0) {
@@ -69,7 +97,7 @@ function submitResponse(payload) {
     ? (interest >= 1.5 ? 'Q1 — Drivers' : 'Q2 — Misaligned')
     : (interest >= 1.5 ? 'Q3 — Untapped Potential' : 'Q4 — Disconnected');
 
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet_();
   let sheet = ss.getSheetByName('Responses');
   if (!sheet) {
     setupSheet();
@@ -96,7 +124,7 @@ function scoreGroup_(answers, ids) {
 }
 
 function getAdminData(pin) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet_();
   const settings = ss.getSheetByName('Settings');
   if (!settings) throw new Error('Run setupSheet() first.');
   const savedPin = String(settings.getRange('B2').getDisplayValue());

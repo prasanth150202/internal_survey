@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team Work-Style Questionnaire</title>
+  <style>
+    :root{font-family:Inter,Arial,sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}body{margin:0}.wrap{max-width:820px;margin:32px auto;padding:20px}
+    .hero,.panel{background:#fff;border:1px solid #e3e8f0;border-radius:18px;padding:26px;margin-bottom:16px}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5266d8}
+    h1{font-size:30px;margin:10px 0}p{line-height:1.55;color:#5d6678}
+    .field{display:grid;gap:7px;margin-top:16px}label{font-weight:650;font-size:14px}
+    input,textarea{width:100%;padding:12px;border:1px solid #cfd6e2;border-radius:10px;font:inherit}
+    .question{padding:20px 0;border-bottom:1px solid #edf0f5}.question:last-child{border:0}
+    .qtitle{font-weight:700;line-height:1.45;margin-bottom:14px}
+    .option{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid #e2e7ef;border-radius:10px;margin:8px 0;cursor:pointer}
+    .option:has(input:checked){border-color:#6575e8;background:#f3f5ff}
+    .option input{width:auto;margin-top:3px;accent-color:#5266d8}.option span{line-height:1.4;font-size:14px}
+    button{border:0;border-radius:10px;padding:13px 18px;background:#263baf;color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+    button:disabled{opacity:.55;cursor:wait}.status{margin-top:14px;font-weight:600}.muted{font-size:12px;color:#778195}
+    @media(max-width:600px){.wrap{padding:12px;margin:12px auto}.hero,.panel{padding:18px}h1{font-size:25px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Team reflection</div>
+    <h1>How do you like to work?</h1>
+    <p>This questionnaire helps us understand the work, conditions, and challenges that help each person contribute well. Choose what you would genuinely do most often. There are no perfect answers.</p>
+    <p class="muted">Your answers are used for team development conversations. They should not be treated as a diagnosis or used as the sole basis for employment decisions.</p>
+    <div class="field"><label for="name">Name *</label><input id="name" autocomplete="name" required placeholder="Your name"></div>
+    <div class="field"><label for="team">Team / role</label><input id="team" placeholder="e.g. Engineering, Marketing"></div>
+  </header>
+  <form id="form">
+    <section class="panel">
+      <div id="questions">Loading questions…</div>
+    </section>
+    <section class="panel">
+      <div class="field"><label for="notes">Anything else you want your lead to understand? (optional)</label><textarea id="notes" rows="3" placeholder="Context, blockers, or work you would like to try…"></textarea></div>
+      <p class="muted">Please answer all 15 scenarios. The results are a preliminary indicator and will be reviewed alongside real work examples.</p>
+      <button id="submit" type="submit">Submit responses</button>
+      <div id="status" class="status" role="status"></div>
+    </section>
+  </form>
+</div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

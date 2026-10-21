@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team Assessment Admin</title>
+  <style>
+    :root{font-family:Inter,Arial,sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}body{margin:0}.wrap{max-width:1200px;margin:28px auto;padding:18px}
+    .top,.panel{background:#fff;border:1px solid #e2e7ef;border-radius:16px;padding:22px;margin-bottom:16px}
+    h1{margin:0 0 8px;font-size:28px}p{color:#687286;line-height:1.5}
+    input,select{padding:11px;border:1px solid #ccd4e1;border-radius:9px;font:inherit}
+    button{border:0;border-radius:9px;padding:11px 15px;background:#263baf;color:white;font-weight:700;cursor:pointer}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.cards{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px}
+    .stat{padding:15px;border:1px solid #e6eaf1;border-radius:12px}.stat small{color:#697386}.num{font-size:25px;font-weight:800;margin-top:6px}
+    .tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:850px}th,td{text-align:left;padding:12px;border-bottom:1px solid #edf0f5;font-size:13px;vertical-align:top}th{background:#f8f9fc}
+    .pill{display:inline-block;border-radius:999px;padding:5px 9px;font-weight:700;font-size:12px;background:#edf0f6}
+    .q1{background:#e1f5e9;color:#17633b}.q2{background:#fff1d6;color:#835600}.q3{background:#e5efff;color:#204f9a}.q4{background:#fbe7e7;color:#923737}
+    .error{color:#a12828;font-weight:600}.hidden{display:none}.muted{font-size:12px;color:#7b8495}
+    @media(max-width:700px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:10px}.top,.panel{padding:16px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="top">
+    <h1>Team assessment admin</h1>
+    <p>Review submissions, filter by quadrant, and open individual responses. The quadrant is a preliminary indicator—not a definitive label.</p>
+    <form class="controls" id="login">
+      <input id="pin" type="password" placeholder="Admin PIN" autocomplete="current-password">
+      <button type="submit">Unlock dashboard</button>
+    </form>
+    <div id="error" class="error"></div>
+  </section>
+  <div id="dashboard" class="hidden">
+    <section class="panel">
+      <div class="cards">
+        <div class="stat"><small>Total responses</small><div class="num" id="total">0</div></div>
+        <div class="stat"><small>Q1 — Drivers</small><div class="num" id="q1">0</div></div>
+        <div class="stat"><small>Q2 — Misaligned</small><div class="num" id="q2">0</div></div>
+        <div class="stat"><small>Q3 — Untapped</small><div class="num" id="q3">0</div></div>
+        <div class="stat"><small>Q4 — Disconnected</small><div class="num" id="q4">0</div></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="controls">
+        <input id="search" placeholder="Search name or team…">
+        <select id="filter">
+          <option value="">All quadrants</option><option>Q1 — Drivers</option><option>Q2 — Misaligned</option><option>Q3 — Untapped Potential</option><option>Q4 — Disconnected</option>
+        </select>
+        <button id="refresh">Refresh</button>
+        <button id="export">Export CSV</button>
+      </div>
+      <p class="muted">Scores are exploratory and should be checked against examples and observed work. Avoid comparing employees without considering role and opportunity.</p>
+      <div class="tablewrap"><table><thead><tr><th>Submitted</th><th>Name</th><th>Team / role</th><th>Motivation</th><th>Interest</th><th>Preliminary quadrant</th><th>Details</th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div id="empty" class="muted"></div>
+    </section>
+    <section class="panel hidden" id="detail">
+      <h2 id="detailTitle">Response details</h2><div id="detailBody"></div>
+    </section>
+  </div>
+</div>
+<script type="module" src="/src/admin.js"></script>
+</body>
+</html>
