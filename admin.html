@@ -13,10 +13,10 @@
     button{border:0;border-radius:9px;padding:11px 15px;background:#263baf;color:white;font-weight:700;cursor:pointer}
     .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.cards{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px}
     .stat{padding:15px;border:1px solid #e6eaf1;border-radius:12px}.stat small{color:#697386}.num{font-size:25px;font-weight:800;margin-top:6px}
-    .tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:850px}th,td{text-align:left;padding:12px;border-bottom:1px solid #edf0f5;font-size:13px;vertical-align:top}th{background:#f8f9fc}
+    .tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:980px}th,td{text-align:left;padding:12px;border-bottom:1px solid #edf0f5;font-size:13px;vertical-align:top}th{background:#f8f9fc}
     .pill{display:inline-block;border-radius:999px;padding:5px 9px;font-weight:700;font-size:12px;background:#edf0f6}
     .q1{background:#e1f5e9;color:#17633b}.q2{background:#fff1d6;color:#835600}.q3{background:#e5efff;color:#204f9a}.q4{background:#fbe7e7;color:#923737}
-    .error{color:#a12828;font-weight:600}.hidden{display:none}.muted{font-size:12px;color:#7b8495}
+    ol li{margin-bottom:10px;line-height:1.45}.error{color:#a12828;font-weight:600}.hidden{display:none}.muted{font-size:12px;color:#7b8495}
     @media(max-width:700px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:10px}.top,.panel{padding:16px}}
   </style>
 </head>
@@ -51,7 +51,7 @@
         <button id="export">Export CSV</button>
       </div>
       <p class="muted">Scores are exploratory and should be checked against examples and observed work. Avoid comparing employees without considering role and opportunity.</p>
-      <div class="tablewrap"><table><thead><tr><th>Submitted</th><th>Name</th><th>Team / role</th><th>Motivation</th><th>Interest</th><th>Preliminary quadrant</th><th>Details</th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div class="tablewrap"><table><thead><tr><th>Submitted</th><th>Name</th><th>Team / role</th><th>Attitude</th><th>Skill</th><th>Interest</th><th>Motivation</th><th>Preliminary quadrant</th><th>Details</th></tr></thead><tbody id="rows"></tbody></table></div>
       <div id="empty" class="muted"></div>
     </section>
     <section class="panel hidden" id="detail">

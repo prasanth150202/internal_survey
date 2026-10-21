@@ -1,7 +1,7 @@
 # Team Quadrant Assessment — Google Sheets + Apps Script
 
 This project includes:
-- A 15-question employee questionnaire (`index.html` + `src/main.js`)
+- A 20-question employee questionnaire (`index.html` + `src/main.js`) covering four dimensions: **Attitude, Skill, Interest, Motivation** (5 questions each, mixed together, answer order shuffled per person)
 - An admin dashboard to review responses, filter quadrants, view selected answers, and export CSV (`admin.html` + `src/admin.js`)
 - A Google Apps Script backend (`Code.gs`) that serves a JSON API and writes to your Google Sheet
 - Google Sheet tabs: `Responses` and `Settings`
@@ -10,6 +10,12 @@ The frontend is plain HTML/JS with no build step. It reads the Apps Script web a
 
 ## Important scoring limitation
 The scenario questions are designed to reduce obvious "good answer" cues, but this is not a validated psychometric test. The current scoring is a **provisional indicator only** and should not be used as the sole basis for performance, promotion, or employment decisions. Review actual examples and manager observations. The current option-to-score logic is intentionally simple and should be calibrated before relying on quadrant assignments; it does not claim to infer a person's true motivation or interest reliably from options alone.
+
+## Scoring
+- Each option in `Code.gs` has its own score (0–3). Each dimension score is the average of its 5 answers (0–3).
+- **Preliminary quadrant** = Motivation × Interest (threshold 1.5): Q1 Drivers, Q2 Misaligned (high motivation, low interest), Q3 Untapped Potential (low motivation, high interest), Q4 Disconnected.
+- Attitude and Skill are reported alongside the quadrant. Skill is self-assessed, so check it against real work.
+- If you change the questions, the `Responses` sheet keeps working; if you change the columns, the old sheet is renamed `Responses (old …)` automatically and a new one is created.
 
 ## Setup
 
