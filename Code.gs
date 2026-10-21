@@ -114,10 +114,10 @@ const QUESTIONS = [
 const RESPONSE_HEADERS = ['Timestamp','Employee Name','Team / Role','Attitude Score','Skill Score','Interest Score','Motivation Score','Preliminary Quadrant','Answers JSON','Examples / Notes'];
 
 // The ID from your sheet's URL: https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit
-const SHEET_ID = 'PASTE_YOUR_SHEET_ID_HERE';
+const SHEET_ID = '1Ow_JGyJbt6O0zgsDZX7fbEYYt8LAZkR19qVoB31adoA';
 
 function getSpreadsheet_() {
-  if (!SHEET_ID || SHEET_ID === 'PASTE_YOUR_SHEET_ID_HERE') throw new Error('Set SHEET_ID at the top of Code.gs.');
+  if (!SHEET_ID || SHEET_ID.indexOf('PASTE_') === 0) throw new Error('Set SHEET_ID at the top of Code.gs.');
   return SpreadsheetApp.openById(SHEET_ID);
 }
 
